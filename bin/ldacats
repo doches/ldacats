@@ -1,0 +1,37 @@
+#!/usr/bin/env ruby
+require 'lib/ldacats'
+require 'optparse'
+
+# Set default options
+options = {}
+options[:target_words] = nil					# Don't filter by target words
+options[:model] = "model-final"
+
+# Rip off mandatory options
+options[:input_path] = ARGV.pop
+
+# Parse command line options
+OptionParser.new do |opts|
+	opts.banner = "Usage: #{__FILE__} [options] /path/to/lda/output"
+	opts.separator ""
+	opts.separator "Options:"
+	
+	opts.on("-t", "--target-words TARGETWORDS",
+					"Relative path to a file containing a list of target words") do |path|
+		options[:target_words] = path
+	end
+	
+	opts.on("-m", "--model ITERATION",
+					"Saved model iteration to load. Defaults to #{options[:model]}") do |iteration|
+		options[:model] = iteration
+	end
+end.parse!
+
+app = LDACats.new(options[:input_path],options[:model])
+categories = options[:target_words].nil? ? app.categories : app.filter_by_targets(options[:target_words])
+word_categories = {}
+categories.each_pair do |category_index,symbol_list|
+	word_categories[category_index.to_s] = symbol_list.map { |symbol| symbol.to_s } if symbol_list.size > 0
+end
+
+puts word_categories.to_yaml

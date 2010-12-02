@@ -1,0 +1,17 @@
+# ldacats
+A tool for converting the output of [GibbsLDA++](http://gibbslda.sourceforge.net) into
+YAMLized, [clusterval](http://github.com/doches/clusterval)-friendly categories.
+
+    This is basically a one-off tool I need for my research, so you're probably not interested in it. But by all means, keep reading...
+    
+## Usage
+
+`ldacats` takes the path to GibbsLDA++ output, reads `model-final.*`, and prints a YAMLized category list to STDOUT.
+
+    ldacats [OPTIONS] path/to/gibbslda/output
+    
+### Options
+
+   + -w <target_words>
+     
+     Loads a list of target words from `./target_words`
