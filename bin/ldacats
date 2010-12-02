@@ -7,11 +7,8 @@ options = {}
 options[:target_words] = nil					# Don't filter by target words
 options[:model] = "model-final"
 
-# Rip off mandatory options
-options[:input_path] = ARGV.pop
-
 # Parse command line options
-OptionParser.new do |opts|
+optparser = OptionParser.new do |opts|
 	opts.banner = "Usage: #{__FILE__} [options] /path/to/lda/output"
 	opts.separator ""
 	opts.separator "Options:"
@@ -25,7 +22,22 @@ OptionParser.new do |opts|
 					"Saved model iteration to load. Defaults to #{options[:model]}") do |iteration|
 		options[:model] = iteration
 	end
-end.parse!
+	
+	opts.on_tail("-h","--help",
+					"Print this help information") do
+		puts opts
+		exit(0)
+	end
+end
+
+optparser.parse!
+
+# Rip off mandatory options
+options[:input_path] = ARGV.shift
+if options[:input_path].nil?
+	puts optparser
+	exit(1)
+end
 
 app = LDACats.new(options[:input_path],options[:model])
 categories = options[:target_words].nil? ? app.categories : app.filter_by_targets(options[:target_words])

@@ -12,6 +12,10 @@ YAMLized, [clusterval](http://github.com/doches/clusterval)-friendly categories.
     
 ### Options
 
-   + -w <target_words>
+   + -t <target_words>
      
      Loads a list of target words from `./target_words`
+
+   + -m <model-iteration.
+     
+     Model iteration (e.g. "model-0300" or "model-final") to load. Defaults to "model-final".
