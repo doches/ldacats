@@ -5,8 +5,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "ldacats"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{A one-off tool for extracting categories from GibbsLDA++ output}
+    gem.description = %Q{Convert the output of GibbsLDA++ (*.phi, specifically) into a YAMLized category mapping suitable for evaluation with clusterval}
     gem.email = "doches@gmail.com"
     gem.homepage = "http://github.com/doches/ldacats"
     gem.authors = ["Trevor Fountain"]
@@ -16,28 +16,6 @@ begin
 rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
 end
-
-require 'rake/testtask'
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
-end
-
-begin
-  require 'rcov/rcovtask'
-  Rcov::RcovTask.new do |test|
-    test.libs << 'test'
-    test.pattern = 'test/**/test_*.rb'
-    test.verbose = true
-  end
-rescue LoadError
-  task :rcov do
-    abort "RCov is not available. In order to run rcov, you must: sudo gem install spicycode-rcov"
-  end
-end
-
-task :test => :check_dependencies
 
 task :default => :test
 
